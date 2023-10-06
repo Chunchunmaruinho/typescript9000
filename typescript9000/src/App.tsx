@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
 
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState<FetchResult>();
 
   const apiUrl = 'https://dummyjson.com/products';
 
@@ -12,16 +12,16 @@ function App() {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        setProduct(data.results);
+        setProduct(data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
 
-
-  type dasd = {
-    products: product[];
+  { product ? (console.log(product)) : (console.log("wait")) };
+  type FetchResult = {
+    products: Array<product>;
     total: number;
     skip: number;
     limit: number;
@@ -38,18 +38,14 @@ function App() {
 
   };
 
+
   return (
     <>
-      {product.map((id, title, description, images, price, discountPercentage) => {
+      <Card
+        title='Title'
+        description='Description'
 
-        <div key={id} className="card">
-          <h2>{title}</h2>
-          <p>{description}</p>
-          <p>{price}</p>
-          <img src={images[1]} />
-        </div>
-
-      })}
+      />
     </>
   )
 }
